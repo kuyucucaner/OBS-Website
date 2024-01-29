@@ -1,0 +1,33 @@
+.personelCourse{
+    margin-left:350px;
+    margin-right:40px;
+    margin-top:100px;
+    border: 5px solid gray;
+    border-radius: 20px;
+}
+h1 {
+    color: #007BFF; /* Başlık rengi */
+    text-align: center; /* Başlık ortalanmış */
+}
+/* Tablo Stili */
+table {
+    width: 100%;
+    margin-top: 20px; /* Tablonun üst tarafındaki boşluk */
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #dee2e6; /* Hücre sınırları */
+}
+
+th {
+    background-color: #007BFF; /* Başlık arkaplan rengi */
+    color: #fff; /* Başlık metin rengi */
+}
+
+/* Genel Sayfa Stili */
+body {
+    font-family: 'Arial', sans-serif; /* Sayfa yazı tipi */
+    background-color: #f8f9fa; /* Sayfa arkaplan rengi */
+    margin: 0;
+}

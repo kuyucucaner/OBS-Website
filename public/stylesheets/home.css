@@ -1,0 +1,21 @@
+.welcome-section {
+    padding: 80px 0; /* Yukarıdan ve aşağıdan boşluk ekleyerek daha iyi bir görünüm sağlar */
+    text-align: center;
+}
+section{
+    background-color: #dbdbdb;
+    height: 100vh;
+}
+.welcome-section h1 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-section p {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* İsterseniz daha fazla özelleştirme ekleyebilirsiniz */

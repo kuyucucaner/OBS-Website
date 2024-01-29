@@ -1,0 +1,71 @@
+.notes{
+    margin-left:350px;
+    margin-right:40px;
+    margin-top:100px;
+    border: 5px solid gray;
+    border-radius: 20px;
+}
+h1 {
+    color: #007BFF; /* Başlık rengi */
+    text-align: center; /* Başlık ortalanmış */
+}
+/* Tablo Stili */
+table {
+    width: 100%;
+    margin-top: 20px; /* Tablonun üst tarafındaki boşluk */
+}
+th, td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #dee2e6; /* Hücre sınırları */
+}
+
+th {
+    background-color: #007BFF; /* Başlık arkaplan rengi */
+    color: #fff; /* Başlık metin rengi */
+}
+
+/* Genel Sayfa Stili */
+body {
+    font-family: 'Arial', sans-serif; /* Sayfa yazı tipi */
+    background-color: #f8f9fa; /* Sayfa arkaplan rengi */
+    margin: 0;
+}
+/* CSS Örneği */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  

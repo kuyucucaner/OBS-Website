@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caner University</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="./stylesheets/note.css">
+    <link rel="stylesheet" href="./stylesheets/navbar.css">
+
+</head>
+<body>
+    <%- include('../views/partials/navbar') %>
+    <div class="notes">
+        <% if (user.role === 'Öğrenci') { %>  
+            <h1>Öğrenci Ders Notları</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Ad-Soyad</th>
+                    <th>Öğrenci Numarası</th>
+                    <th>Ders Adı</th>
+                    <th>Ders Kodu</th>
+                    <th>Ders  Dönemi</th>
+                    <th>Ders Derecesi</th>
+                    <th>Ders Notu</th>
+                    <th>Harf Notu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (let i = 0; i < notes.length; i++) { %>
+                    <tr>
+                        <td><%= notes[i].FirstName %> <%= notes[i].LastName %></td>
+                        <td><%= notes[i].StudentNo %></td>
+                        <td><%= notes[i].CourseName %></td>
+                        <td><%= notes[i].Description %></td>
+                        <td><%= notes[i].Semester %></td>
+                        <td><%= notes[i].Grade %></td>
+                        <td><%= notes[i].Note %></td>
+                        <td><%= notes[i].LetterGrade %></td>
+                    </tr>
+                <% } %>
+            </tbody>        
+        </table>
+        <% } else if (user.role === 'Öğretmen') { %>  
+            <form action="/note" method="GET">
+                <label for="courseSelect">Ders Seç:</label>
+                <select id="courseSelect" name="courseId">
+                    <% if (courses.length > 0) { %>
+                        <% for (let i = 0; i < courses.length; i++) { %>
+                          <option value="<%= courses[i].ID %>"><%= courses[i].CourseName %></option>
+                        <% } %>
+                      <% } else { %>
+                        <option value="" disabled>Henüz bir ders bulunmamaktadır</option>
+                      <% } %>
+                </select>
+                <button type="submit">Dersin Öğrencilerini Getir</button>
+              </form>
+            <h1>Öğrenciler  <h1>Dersin Ortalaması : <%= students.averageNote  %> </h1></h1>
+     <!-- ... -->
+<table border="1">
+    <thead>
+        <tr>
+            <th>Ad-Soyad</th>
+            <th>Öğrenci Numarası</th>
+            <th>Ders Adı</th>
+            <th>Ders Kodu</th>
+            <th>Ders Dönemi</th>
+            <th>Ders Derecesi</th>
+            <th>Ders Notu</th>
+            <th>Harf Notu</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (let i = 0; i < students.studentsByNotes.length; i++) { %>
+            <tr>
+                <td><%= students.studentsByNotes[i].FirstName %> <%= students.studentsByNotes[i].LastName %></td>
+                <td><%= students.studentsByNotes[i].StudentNo %></td>
+                <td><%= students.studentsByNotes[i].CourseName %></td>
+                <td><%= students.studentsByNotes[i].Description %></td>
+                <td><%= students.studentsByNotes[i].Semester %></td>
+                <td><%= students.studentsByNotes[i].Grade %></td>
+                <td>
+                    <% if (students.studentsByNotes[i].Note === 'Girilmedi') { %>
+                        <input maxlength="3" min="0" max="100" type="text" name="note_<%= students.studentsByNotes[i].StudentID %>_<%= students.studentsByNotes[i].CourseID %>" placeholder="XXX">
+                    <% } else { %>
+                        <%= students.studentsByNotes[i].Note %>
+                    <% } %>
+                </td>
+                <td>
+                    <% if (students.studentsByNotes[i].Note === 'Girilmedi') { %>
+                        <button type="button" onclick="saveNote('<%= students.studentsByNotes[i].StudentID %>', '<%= students.studentsByNotes[i].CourseID %>')">Kaydet</button>
+                    <% } else { %>
+                        <%= students.studentsByNotes[i].LetterGrade %>
+                    <% } %>
+                </td>
+            </tr>
+        <% } %>
+        
+    </tbody>
+</table>
+            <% } %>
+
+    </div>
+    <script src='./javascripts/goToPages.js'></script>
+    <script src='./javascripts/logout.js'></script>
+    <script src='./javascripts/addNote.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

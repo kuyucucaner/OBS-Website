@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./stylesheets/profile.css">
+  <link rel="stylesheet" href="./stylesheets/navbar.css">
+
+</head>
+
+<body>
+  <%- include('../views/partials/navbar') %>
+    <div class="profile">
+      <% if (user.Role  === 'Öğretmen') { %>
+        <h1 class="profileheader">Öğretmen Bilgileri 
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#profileGuncelleModal">
+          <i class="bi bi-person-fill-gear"></i>
+        </button>
+      </h1>
+            <% } else if (user.Role  === 'Öğrenci') { %>
+      <h1 class="profileheader">Öğrenci Bilgileri    
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#profileGuncelleModal">
+        <i class="bi bi-person-fill-gear"></i>
+      </button>
+    </h1>
+          <% } %>
+      <div class="profileuser">
+        <% if (user.Role === 'Öğretmen') { %>
+            <p class="profileinformation" ><strong>Öğretmen Numarası :</strong>
+              <span id="studentNoValue"><%= user.StudentNo %></span>
+            </p>
+        <% } else if (user.Role === 'Öğrenci') { %>
+            <p class="profileinformation"><strong>Öğrenci Numarası :</strong>
+              <span id="studentNoValue"><%= user.StudentNo %></span>
+            </p>
+            <p class="profileinformation"><strong>Sınıf :</strong>
+                <%= user.Class %>
+            </p>
+            <p class="profileinformation"><strong>Ortalaması :</strong>
+                <%= user.GPA %>
+            </p>
+            <p class="profileinformation"><strong>Staj Durumu :</strong>
+                <%= user.Internship %>
+            </p>
+        <% } %>
+        <p class="profileinformation"><strong>Ad :</strong>
+            <%= user.FirstName %>
+        </p>
+        <p class="profileinformation"><strong>Soyad:</strong>
+            <%= user.LastName %>
+        </p>
+        <p class="profileinformation"><strong>Email:</strong>
+            <%= user.Email %>
+        </p>
+        <p class="profileinformation"><strong>Kişi Durumu :</strong>
+            <%= user.Role %>
+        </p>
+        <p class="profileinformation"><strong>Fakülte/Bölüm :</strong>
+            <%= user.Faculty %> / <%= user.Department %>
+        </p>
+        <!-- İF ELSE  -->
+        <p class="profileinformation">
+          <strong>Kişi Adresi :</strong>
+        <% if (user.Address === 'BOŞ') { %>
+            <input type="text" name="address" id="address" placeholder="XXX">
+            <% } else  { %>
+                <span id="addressValue"><%= user.Address %></span>
+              <% } %>
+            </p>
+      <p class="profileinformation">
+        <strong>Telefon Numarası :</strong>
+        <% if (user.PhoneNumber === 'BOŞ') { %>
+          <input type="text" name="phoneNumber" id="phoneNumber" placeholder="XXX">
+        <% } else  { %>
+          <span id="phoneNumberValue"><%= user.PhoneNumber %></span>
+        <% } %>
+      </p>
+      
+      <p class="profileinformation">
+        <strong>İkinici Telefon Numarası :</strong>
+        <% if (user.EmergencyPhoneNumber === 'BOŞ') { %>
+          <input name="emergencyPhoneNumber" id="emergencyPhoneNumber" placeholder="XXX">
+        <% } else  { %>
+          <span id="emergencyPhoneNumberValue"><%= user.EmergencyPhoneNumber %></span>
+        <% } %>
+      </p>
+      
+    </div>
+    
+      <% if (user.Role==='Öğretmen' ) { %>
+        <br>
+        <br>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#dersEkleModal">Ders Ekle</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#sinavEkleModal">Sınav Ekle</button>
+        <button type="button" onclick="updateChanges()" class="btn btn-warning">Profili Güncelle</button>
+        <% } else if (user.Role==='Öğrenci' ) { %>
+          <button type="button" onclick="updateChanges()" class="btn btn-warning">Profili Güncelle</button>
+          <% } %>
+        </div>
+                           <!-- UPDATE MODAL -->
+    <div class="modal fade" id="profileGuncelleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Profil güncelleme </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="updateProfile" method="POST" action="/update-profile-user">
+              <input type="hidden" id="studentNo" name="studentNo" value="<%= user.StudentNo %>">
+              <div class="mb-3">
+                <label for="email" class="form-label">email:</label>
+                <input type="text" class="form-control" id="email" name="email" value = "<%= user.Email %>">
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label">address:</label>
+                <input type="text" class="form-control" id="address" name="address" value = "<%= user.Address %>">
+              </div>
+              <div class="mb-3">
+                <label for="phoneNumber" class="form-label">phone number:</label>
+                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" value = "<%= user.PhoneNumber %>">
+              </div>
+              <div class="mb-3">
+                <label for="emergencyPhoneNumber" class="form-label">e phone number:</label>
+                <input type="text" class="form-control" id="emergencyPhoneNumber" name="emergencyPhoneNumber" value = "<%= user.EmergencyPhoneNumber %>">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+                    <!-- COURSE MODAL -->
+    <div class="modal fade" id="dersEkleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ders Ekleme Formu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addCourse" method="POST" action="/addCourse">
+              <div class="mb-3">
+                <label for="courseName" class="form-label">Ders Adı:</label>
+                <input type="text" class="form-control" id="courseName">
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Ders Kodu:</label>
+                <input type="text" class="form-control" id="description">
+              </div>
+              <div class="mb-3">
+                <label for="materialsId" class="form-label">Ders Materyali:</label>
+                <select class="form-select" id="materialsId">
+                  <option value="3" selected>YOK</option>
+                  <option value="1">Sunum</option>
+                  <option value="2">PDF</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="semester" class="form-label">Ders Dönemi:</label>
+                <select class="form-select" id="semester">
+                  <option value="Yaz" selected>Yaz</option>
+                  <option value="Kış">Kış</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="grade" class="form-label">Ders Derecesi:</label>
+                <select class="form-select" id="grade">
+                  <option value="Hazırlık" selected>Hazırlık Sınıfı</option>
+                  <option value="1">1. Sınıf</option>
+                  <option value="2">2. Sınıf</option>
+                  <option value="3">3. Sınıf</option>
+                  <option value="4">4. Sınıf</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="teacherId" class="form-label">Öğretmen: </label>
+                <input type="text" class="form-control" id="teacherIdHidden" value="<%= user.FirstName %>" disabled>
+                <input type="hidden" id="teacherId" name="teacherId" value="<%= user.ID %>">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- EXAM MODAL -->
+    <div class="modal fade" id="sinavEkleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sınav Ekleme Formu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addExam" method="POST" action="/addExam">
+              <div class="mb-3">
+                <label for="courseId" class="form-label">Ders Adı:</label>
+                <select class="form-control" id="courseId" name="courseId">
+                  <% teacherCourses.forEach(function(course) { %>
+                    <option value="<%= course.ID %>">
+                      <%= course.CourseName %>
+                    </option>
+                    <% }); %>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="datetime" class="form-label">Sınav tarihi ve saati:</label>
+                <input type="datetime-local" class="form-control" id="datetime" name="datetime">
+            </div>
+            
+              <div class="mb-3">
+                <label for="materialsId" class="form-label">Sınav Materyali:</label>
+                <select class="form-select" id="materialsId" name="materialsId">
+                  <option value="4" selected>Çoktan Seçmeli</option>
+                  <option value="5">Yazılı</option>
+                </select>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src='./javascripts/goToPages.js'></script>
+    <script src='./javascripts/logout.js'></script>
+    <script src='./javascripts/addCourse.js'></script>
+    <script src='./javascripts/updateProfile.js'></script>
+    <script src='./javascripts/updateUser.js'></script>
+    <script src='./javascripts/addExam.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

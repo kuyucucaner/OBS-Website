@@ -1,0 +1,43 @@
+/* Genel stil */
+.asideheader {
+  background-color: #f4f4f4;
+  padding: 20px;
+  min-height: 100vh;
+  max-width: 300px;
+  min-width: 300px;
+  position: fixed;
+  left: 0;
+  top: 0; 
+}
+  
+.asidelogo {
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.asideul {
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+.asideli {
+  margin-bottom: 10px;
+  border-bottom: 1px solid black;
+  margin-top:30px;
+}
+
+/* Bağlantılar */
+.asidea {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+
+  transition: color 0.3s ease;
+}
+
+.asidea:hover {
+  color: #0066cc; /* Hover renk */
+}
