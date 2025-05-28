@@ -2,7 +2,7 @@
 
 **OBS Website** is a student information system (SIS) prototype modeled after a university's online academic portal.  
 It allows instructors to add and manage courses, associate them with teachers, and create exams.  
-Secure user authentication is implemented via JWT, with role-based access between teachers and students.
+Secure user authentication is implemented via JWT, with role-based access between teachers and students. 
 
 ---
 
